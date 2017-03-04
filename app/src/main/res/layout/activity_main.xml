@@ -27,9 +27,23 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/editText1"
-        android:textColor="@android:color/white"
+        android:layout_centerHorizontal="true"
         android:background="@color/colorPrimary"
-        android:text="Click me" />
+        android:text="Click me"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/pdfViewPager_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PdfViewPager Usage in Kotlin"
+        android:textAllCaps="false"
+        android:layout_below="@+id/button1"
+        android:layout_marginTop="48dp"
+        android:layout_centerHorizontal="true"
+        android:background="#c00"
+        android:textColor="@android:color/white"
+        android:padding="16dp"
+        />
 </RelativeLayout>

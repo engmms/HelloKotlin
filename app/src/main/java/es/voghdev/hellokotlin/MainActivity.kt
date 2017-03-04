@@ -17,6 +17,7 @@ package es.voghdev.hellokotlin
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
@@ -43,6 +44,10 @@ class MainActivity : AppCompatActivity() {
                     toast("Screen size is: $width x $height")
                 }
             }
+        }
+
+        pdfViewPager_button.setOnClickListener {
+            startActivity(Intent(this, PdfViewPagerActivity::class.java))
         }
     }
 
