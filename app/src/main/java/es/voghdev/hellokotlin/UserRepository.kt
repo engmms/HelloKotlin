@@ -26,6 +26,7 @@ class UserRepository(val getUsersApiDataSource: GetUsers?, val getUsersDbDataSou
             cache.clear()
 
         cache = getUsersApiDataSource?.getUsers() as MutableList<User>
+        Thread.sleep(3000) // Test if coroutines are blocking or not
         cachePolicy = TimedCachePolicy(15000)
 
         return cache
