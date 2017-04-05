@@ -31,6 +31,8 @@ class UserDetailPresenterTest {
         presenter.view = mockView
         presenter.initialize()
 
+        waitForAsyncBlocksToFinish()
+
         verify(mockUserRepository, times(1))?.getUsers()
     }
 
