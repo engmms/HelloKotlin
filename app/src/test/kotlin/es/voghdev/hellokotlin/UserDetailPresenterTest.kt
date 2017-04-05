@@ -28,8 +28,6 @@ class UserDetailPresenterTest {
     fun `should request a List of users on start`() = runBlocking<Unit> {
         val presenter = UserDetailPresenter(mockContext, mockUserRepository)
 
-        assertNotNull(presenter)
-
         presenter.view = mockView
         presenter.initialize()
 
