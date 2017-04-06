@@ -16,20 +16,22 @@
 package es.voghdev.hellokotlin
 
 import android.content.Context
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.doAsync
 
 class SomeDetailPresenter(val context: Context, val userRepository: UserRepository) :
         Presenter<SomeDetailPresenter.MVPView, SomeDetailPresenter.Navigator>() {
 
-    override fun initialize() {
-        doAsync() {
-            val users = userRepository.getUsers()
+    override fun initialize(): Job = launch(CommonPool) {
+        val users = userRepository.getUsers()
 
-            if (users.isNotEmpty())
-                view?.showUsers(users)
-            else
-                view?.showEmptyCase()
-        }
+        if (users.isNotEmpty())
+            view?.showUsers(users)
+        else
+            view?.showEmptyCase()
     }
 
     interface MVPView {

@@ -20,29 +20,26 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 
-class UserDetailPresenter(val context: Context, val userRepository: UserRepository) : Presenter<UserDetailPresenter.MVPView, UserDetailPresenter.Navigator>(){
+class UserDetailPresenter(val context: Context, val userRepository: UserRepository) : Presenter<UserDetailPresenter.MVPView, UserDetailPresenter.Navigator>() {
 
     interface MVPView {
         fun showUserCount(size: Int)
         fun hideLoading()
 
     }
+
     interface Navigator {
 
     }
 
-    override fun initialize() {
-        launch(CommonPool) {
-            val users = userRepository.getUsers()
-            val user = users.filter { it.name == "John" }
+    override fun initialize() = launch(CommonPool) {
+        val users = userRepository.getUsers()
+        val user = users.filter { it.name.contains("John") }
 
-            launch(UI) {
-                view?.hideLoading()
-                view?.showUserCount(users.size)
-            }
-        }
-
-
+//        launch(UI) {
+            view?.hideLoading()
+            view?.showUserCount(users.size)
+//        }
     }
 
 }

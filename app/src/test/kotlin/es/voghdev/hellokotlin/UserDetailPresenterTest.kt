@@ -1,7 +1,6 @@
 package es.voghdev.hellokotlin
 
 import android.content.Context
-import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -29,14 +28,20 @@ class UserDetailPresenterTest {
         val presenter = UserDetailPresenter(mockContext, mockUserRepository)
 
         presenter.view = mockView
-        presenter.initialize()
-
-        waitForAsyncBlocksToFinish()
+        presenter.initialize().join()
 
         verify(mockUserRepository, times(1))?.getUsers()
     }
 
-    private fun waitForAsyncBlocksToFinish() {
-        Thread.sleep(30)
+    @Test
+    fun `should hide loading bar and show user count once user list is received`() = runBlocking<Unit> {
+        `when`(mockUserRepository.getUsers()).thenReturn(listOf(User(name = "John Doe")))
+        val presenter = UserDetailPresenter(mockContext, mockUserRepository)
+
+        presenter.view = mockView
+        presenter.initialize().join()
+
+        verify(mockView, times(1))?.hideLoading()
+        verify(mockView, times(1))?.showUserCount(1)
     }
 }
