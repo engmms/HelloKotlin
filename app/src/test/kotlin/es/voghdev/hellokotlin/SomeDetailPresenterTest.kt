@@ -5,6 +5,7 @@ import es.voghdev.hellokotlin.features.user.SomeDetailPresenter
 import es.voghdev.hellokotlin.features.user.User
 import es.voghdev.hellokotlin.features.user.UserRepository
 import junit.framework.Assert.assertNotNull
+import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -27,47 +28,37 @@ class SomeDetailPresenterTest {
     }
 
     @Test
-    fun `should request a List of users on start`() {
+    fun `should request a List of users on start`() = runBlocking<Unit> {
         val presenter = SomeDetailPresenter(mockContext, mockUserRepository)
 
         assertNotNull(presenter)
 
         presenter.view = mockView
-        presenter.initialize()
-
-        waitForAsyncBlocksToFinish()
+        presenter.initialize().join()
 
         verify(mockUserRepository, times(1))?.getUsers()
     }
 
-    private fun waitForAsyncBlocksToFinish() {
-        Thread.sleep(30)
-    }
-
     @Test
-    fun `should show user list if request has results`() {
+    fun `should show user list if request has results`() = runBlocking<Unit> {
         val presenter = SomeDetailPresenter(mockContext, mockUserRepository)
         `when`(mockUserRepository.getUsers()).thenReturn(listOf(User(name = "John")))
         assertNotNull(presenter)
 
         presenter.view = mockView
-        presenter.initialize()
-
-        waitForAsyncBlocksToFinish()
+        presenter.initialize().join()
 
         verify(mockView, times(1))?.showUsers(anyList())
     }
 
     @Test
-    fun `should show empty case if request has no results`() {
+    fun `should show empty case if request has no results`() = runBlocking<Unit> {
         val presenter = SomeDetailPresenter(mockContext, mockUserRepository)
 
         assertNotNull(presenter)
 
         presenter.view = mockView
-        presenter.initialize()
-
-        waitForAsyncBlocksToFinish()
+        presenter.initialize().join()
 
         verify(mockView, times(1))?.showEmptyCase()
     }

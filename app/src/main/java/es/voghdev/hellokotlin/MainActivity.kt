@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
@@ -43,6 +44,11 @@ class MainActivity : AppCompatActivity() {
                     toast("Screen size is: $width x $height")
                 }
             }
+        }
+
+        rootView.setOnLongClickListener {
+            startActivity<UserDetailActivity>(Pair("id", 1))
+            false
         }
     }
 

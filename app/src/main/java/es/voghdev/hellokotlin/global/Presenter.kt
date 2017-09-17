@@ -15,12 +15,25 @@
  */
 package es.voghdev.hellokotlin.global
 
-abstract class Presenter<T1, T2>() {
-    open fun initialize() { /* Empty */ }
-    open fun resume() { /* Empty */ }
-    open fun pause() { /* Empty */ }
-    open fun destroy() { /* Empty */ }
+import kotlinx.coroutines.experimental.Job
 
-    var view : T1? = null
-    var navigator : T2? = null
+abstract class Presenter<T1, T2>() {
+    open fun initialize(): Job {
+        return Job()
+    }
+
+    open fun resume(): Job {
+        return Job()
+    }
+
+    open fun pause(): Job {
+        return Job()
+    }
+
+    open fun destroy(): Job {
+        return Job()
+    }
+
+    var view: T1? = null
+    var navigator: T2? = null
 }

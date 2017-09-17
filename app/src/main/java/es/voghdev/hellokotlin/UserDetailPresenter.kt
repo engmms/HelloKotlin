@@ -13,30 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package es.voghdev.hellokotlin.features.user
+package es.voghdev.hellokotlin
 
 import android.content.Context
-import es.voghdev.hellokotlin.global.Presenter
+import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 
-class SomeDetailPresenter(val context: Context, val userRepository: UserRepository) :
-        Presenter<SomeDetailPresenter.MVPView, SomeDetailPresenter.Navigator>() {
-
-    override fun initialize(): Job = launch(CommonPool) {
-        val users = userRepository.getUsers()
-
-        if (users.isNotEmpty())
-            view?.showUsers(users)
-        else
-            view?.showEmptyCase()
-    }
+class UserDetailPresenter(val context: Context, val userRepository: UserRepository) : Presenter<UserDetailPresenter.MVPView, UserDetailPresenter.Navigator>() {
 
     interface MVPView {
-        fun showUsers(users: List<User>)
-        fun showEmptyCase()
+        fun showUserCount(size: Int)
+        fun hideLoading()
+
     }
 
-    interface Navigator
+    interface Navigator {
+
+    }
+
+    override fun initialize() = launch(CommonPool) {
+        val users = userRepository.getUsers()
+        val user = users.filter { it.name.contains("John") }
+
+//        launch(UI) {
+            view?.hideLoading()
+            view?.showUserCount(users.size)
+//        }
+    }
+
 }
