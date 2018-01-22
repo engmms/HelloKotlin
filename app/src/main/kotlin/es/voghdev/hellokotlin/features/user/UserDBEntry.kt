@@ -30,7 +30,7 @@ class UserDBEntry : BaseModel {
 
     @PrimaryKey(autoincrement = true)
     @Column
-    val id: Long = 0L
+    var id: Long = 0L
     @Column
     var name: String = ""
     @Column
