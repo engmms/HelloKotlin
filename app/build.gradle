@@ -71,6 +71,15 @@ dependencies {
     compile "org.jetbrains.anko:anko-common:0.9.1a"
     testCompile "com.nhaarman:mockito-kotlin:1.4.0"
 
+    // DBFlow
+
+    // Use if Kotlin user.
+    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:4.2.4"
+
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:4.2.4"
+    compile "com.github.Raizlabs.DBFlow:dbflow:4.2.4"
+    compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:4.2.4"
+
     ktlint "com.github.shyiko:ktlint:0.15.0"
 }
 
