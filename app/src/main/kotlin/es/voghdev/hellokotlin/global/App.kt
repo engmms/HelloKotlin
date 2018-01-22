@@ -1,7 +1,6 @@
 package es.voghdev.hellokotlin.global
 
 import android.app.Application
-import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
 
 class App : Application() {
