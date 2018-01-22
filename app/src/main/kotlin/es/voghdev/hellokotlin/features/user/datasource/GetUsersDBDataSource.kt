@@ -15,6 +15,13 @@
  */
 package es.voghdev.hellokotlin.features.user.datasource
 
+import com.raizlabs.android.dbflow.sql.language.SQLite
+import es.voghdev.hellokotlin.features.user.User
+import es.voghdev.hellokotlin.features.user.UserDBEntry
 import es.voghdev.hellokotlin.features.user.usecase.GetUsers
 
-class GetUsersDBDataSource : GetUsers
+class GetUsersDBDataSource : GetUsers {
+    override fun getUsers(): List<User> {
+        return SQLite.select().from(UserDBEntry::class.java).queryList().map { it.toDomain() }
+    }
+}

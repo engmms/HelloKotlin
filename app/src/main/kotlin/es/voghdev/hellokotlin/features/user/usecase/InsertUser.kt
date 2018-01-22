@@ -15,8 +15,10 @@
  */
 package es.voghdev.hellokotlin.features.user.usecase
 
+import es.voghdev.hellokotlin.features.user.User
+
 interface InsertUser {
-    fun insertUser() {
+    fun insertUser(user: User) {
         /* Empty */
     }
 }

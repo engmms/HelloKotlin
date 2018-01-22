@@ -15,13 +15,14 @@
  */
 package es.voghdev.hellokotlin
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.DisplayMetrics
+import es.voghdev.hellokotlin.features.user.SomeDetailActivity
+import es.voghdev.hellokotlin.global.screenHeight
+import es.voghdev.hellokotlin.global.screenWidth
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         button1.setOnClickListener {
             toast("You wrote: ${editText1.text}")
 
-            doAsync() {
+            doAsync {
                 Thread.sleep(2500)
                 uiThread {
                     val width: Int = screenWidth()
@@ -44,17 +45,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
 
-    fun Context.screenWidth(): Int {
-        val displayMetrics: DisplayMetrics = DisplayMetrics()
-        (this as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
-        return displayMetrics.widthPixels
-    }
-
-    fun Context.screenHeight(): Int {
-        val displayMetrics: DisplayMetrics = DisplayMetrics()
-        (this as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
-        return displayMetrics.heightPixels
+        button1.setOnLongClickListener {
+            startActivity<SomeDetailActivity>()
+            false
+        }
     }
 }

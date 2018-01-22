@@ -21,7 +21,7 @@ import es.voghdev.hellokotlin.R
 import es.voghdev.hellokotlin.domain.AndroidResLocator
 import es.voghdev.hellokotlin.features.user.datasource.GetUsersApiDataSource
 import es.voghdev.hellokotlin.features.user.datasource.GetUsersDBDataSource
-import es.voghdev.hellokotlin.features.user.datasource.InsertUserApiDataSource
+import es.voghdev.hellokotlin.features.user.datasource.InsertUserDBDataSource
 import es.voghdev.hellokotlin.global.BaseActivity
 import kotlinx.android.synthetic.main.activity_some_detail.*
 
@@ -33,13 +33,23 @@ class SomeDetailActivity : BaseActivity(),
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         userRepository = UserRepository(
                 getUsersApiDataSource = GetUsersApiDataSource(),
-                getUsersDbDataSource = GetUsersDBDataSource(),
-                insertUserApiDataSource = InsertUserApiDataSource())
+                getUsersDBDataSource = GetUsersDBDataSource(),
+                insertUserDBDataSource = InsertUserDBDataSource())
 
         presenter = SomeDetailPresenter(AndroidResLocator(this), userRepository)
         presenter?.initialize()
         presenter?.view = this
         presenter?.navigator = this
+
+        btn_add.setOnClickListener {
+            userRepository.insertUser(User(
+                    "John Doe",
+                    "Elm St. 178",
+                    "random",
+                    "randomuser@android.com",
+                    "http://bit.ly/lM5f24g"
+            ))
+        }
     }
 
     override fun getLayoutId(): Int {

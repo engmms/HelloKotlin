@@ -21,15 +21,18 @@ import es.voghdev.hellokotlin.features.user.usecase.GetUsers
 import es.voghdev.hellokotlin.features.user.usecase.InsertUser
 import es.voghdev.hellokotlin.global.CachePolicy
 
-class UserRepository(val getUsersApiDataSource: GetUsers, val getUsersDbDataSource: GetUsers, val insertUserApiDataSource: InsertUser) : GetUsers, InsertUser by insertUserApiDataSource {
+class UserRepository(val getUsersApiDataSource: GetUsers,
+                     val getUsersDBDataSource: GetUsers,
+                     val insertUserDBDataSource: InsertUser)
+    : GetUsers, InsertUser by insertUserDBDataSource {
     var cachePolicy: CachePolicy? = null
-    var cache: MutableList<User> = ArrayList<User>()
+    var cache: MutableList<User> = ArrayList()
 
     override fun getUsers(): List<User> {
         if (cachePolicy?.isCacheDirty() ?: false)
             cache.clear()
 
-        cache = getUsersApiDataSource.getUsers() as MutableList<User>
+        cache = getUsersDBDataSource.getUsers().toMutableList()
         cachePolicy = TimedCachePolicy(15000)
 
         return cache
