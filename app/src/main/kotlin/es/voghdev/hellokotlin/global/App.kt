@@ -18,6 +18,6 @@ class App : Application() {
     }
 
     private fun initializeDatabase() {
-        FlowManager.init(FlowConfig.Builder(this).build())
+        FlowManager.init(this)
     }
 }

@@ -72,8 +72,6 @@ dependencies {
     testCompile "com.nhaarman:mockito-kotlin:1.4.0"
 
     // DBFlow
-
-    // Use if Kotlin user.
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:4.2.4"
 
     compile "com.github.Raizlabs.DBFlow:dbflow-core:4.2.4"
