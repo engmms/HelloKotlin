@@ -31,6 +31,8 @@ class SomeDetailActivity : BaseActivity(),
     lateinit var userRepository: UserRepository
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+
         userRepository = UserRepository(
                 getUsersApiDataSource = GetUsersApiDataSource(),
                 getUsersDBDataSource = GetUsersDBDataSource(),
