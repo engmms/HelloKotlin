@@ -16,7 +16,6 @@
 package es.voghdev.hellokotlin.features.user
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import es.voghdev.hellokotlin.R
 import es.voghdev.hellokotlin.domain.AndroidResLocator
 import es.voghdev.hellokotlin.features.user.datasource.GetUsersApiDataSource
@@ -30,8 +29,8 @@ class SomeDetailActivity : BaseActivity(),
     var presenter: SomeDetailPresenter? = null
     lateinit var userRepository: UserRepository
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         userRepository = UserRepository(
                 getUsersApiDataSource = GetUsersApiDataSource(),
@@ -39,18 +38,13 @@ class SomeDetailActivity : BaseActivity(),
                 insertUserDBDataSource = InsertUserDBDataSource())
 
         presenter = SomeDetailPresenter(AndroidResLocator(this), userRepository)
+
         presenter?.initialize()
         presenter?.view = this
         presenter?.navigator = this
 
         btn_add.setOnClickListener {
-            userRepository.insertUser(User(
-                    "John Doe",
-                    "Elm St. 178",
-                    "random",
-                    "randomuser@android.com",
-                    "http://bit.ly/lM5f24g"
-            ))
+            presenter?.onAddButtonClicked()
         }
     }
 
@@ -58,19 +52,19 @@ class SomeDetailActivity : BaseActivity(),
         return R.layout.activity_some_detail
     }
 
-    override fun showUsers(users: List<User>) {
+    override fun showUsers(users: List<User>) = runOnUiThread {
         tvTitle.text = getString(R.string.users_found_param, users.size)
     }
 
-    override fun showEmptyCase() {
+    override fun showEmptyCase() = runOnUiThread {
         tvTitle.text = getString(R.string.no_results)
     }
 
-    override fun showSomeResult() {
+    override fun showSomeResult() = runOnUiThread {
         tvTitle.text = "Ok, result has arrived"
     }
 
-    override fun showTitle(title: String) {
+    override fun showTitle(title: String) = runOnUiThread {
         tvTitle.text = title
     }
 }

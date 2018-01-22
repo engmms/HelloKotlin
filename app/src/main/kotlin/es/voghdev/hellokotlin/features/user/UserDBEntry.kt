@@ -19,22 +19,28 @@ import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
 import com.raizlabs.android.dbflow.structure.BaseModel
+import es.voghdev.hellokotlin.features.user.UserDBEntry.Companion.NAME
 import es.voghdev.hellokotlin.global.AppDatabase
 
-@Table(database = AppDatabase::class)
+@Table(name = NAME, database = AppDatabase::class, allFields = true)
 class UserDBEntry : BaseModel {
-    @Column @PrimaryKey
-    val id: Long? = 0L
+    companion object {
+        const val NAME = "UserDBEntry"
+    }
+
+    @PrimaryKey(autoincrement = true)
     @Column
-    var name: String? = ""
+    val id: Long = 0L
     @Column
-    var address: String? = ""
+    var name: String = ""
     @Column
-    var username: String? = ""
+    var address: String = ""
     @Column
-    var email: String? = ""
+    var username: String = ""
     @Column
-    var thumbnail: String? = ""
+    var email: String = ""
+    @Column
+    var thumbnail: String = ""
 
     constructor() {
         // Mandatory for DBFlow
@@ -52,11 +58,11 @@ class UserDBEntry : BaseModel {
 
     fun toDomain(): User {
         return User(
-                name ?: "",
-                address ?: "",
-                username ?: "",
-                email ?: "",
-                thumbnail ?: ""
+                name,
+                address,
+                username,
+                email,
+                thumbnail
         )
     }
 }

@@ -11,6 +11,12 @@ class App : Application() {
         initializeDatabase()
     }
 
+    override fun onTerminate() {
+        super.onTerminate()
+
+        FlowManager.destroy()
+    }
+
     private fun initializeDatabase() {
         FlowManager.init(FlowConfig.Builder(this).build())
     }

@@ -21,6 +21,7 @@ import es.voghdev.hellokotlin.features.invoice.Invoice
 import es.voghdev.hellokotlin.global.Presenter
 import es.voghdev.hellokotlin.global.coroutine
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class SomeDetailPresenter(val resLocator: ResLocator, val userRepository: UserRepository) :
         Presenter<SomeDetailPresenter.MVPView, SomeDetailPresenter.Navigator>() {
@@ -32,7 +33,9 @@ class SomeDetailPresenter(val resLocator: ResLocator, val userRepository: UserRe
         doAsync {
             val users = userRepository.getUsers()
 
-            if (users.isNotEmpty()) view?.showUsers(users) else view?.showEmptyCase()
+            uiThread {
+                if (users.isNotEmpty()) view?.showUsers(users) else view?.showEmptyCase()
+            }
         }
     }
 
@@ -42,6 +45,16 @@ class SomeDetailPresenter(val resLocator: ResLocator, val userRepository: UserRe
         }.await()
 
         view?.showSomeResult()
+    }
+
+    fun onAddButtonClicked() {
+        userRepository.insertUser(User(
+                "John Doe",
+                "Elm St. 178",
+                "random",
+                "randomuser@android.com",
+                "http://bit.ly/lM5f24g"
+        ))
     }
 
     suspend fun onSomeOtherEventHappened() {
