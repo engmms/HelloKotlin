@@ -27,7 +27,7 @@ import org.jetbrains.anko.doAsync
 class SomeDetailPresenter(val resLocator: ResLocator, val userRepository: UserRepository) :
         Presenter<SomeDetailPresenter.MVPView, SomeDetailPresenter.Navigator>() {
 
-    override suspend fun initialize() {
+    suspend override fun initialize() {
         val title = resLocator.getString(R.string.tech_debt_is_paid)
         view?.showTitle(title)
 

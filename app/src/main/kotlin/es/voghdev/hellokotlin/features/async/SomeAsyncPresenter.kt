@@ -24,7 +24,7 @@ import es.voghdev.hellokotlin.global.Presenter
 class SomeAsyncPresenter(val context: Context, val asyncRepository: AsyncCall) :
         Presenter<SomeAsyncPresenter.MVPView, SomeAsyncPresenter.Navigator>() {
 
-    override suspend fun initialize() {
+    suspend override fun initialize() {
         view?.showLoading()
 
         asyncRepository.execute(object : AsyncCall.Listener {
