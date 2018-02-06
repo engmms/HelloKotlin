@@ -25,7 +25,7 @@ import org.jetbrains.anko.doAsync
 class SomeDetailPresenter(val resLocator: ResLocator, val userRepository: UserRepository) :
         Presenter<SomeDetailPresenter.MVPView, SomeDetailPresenter.Navigator>() {
 
-    override fun initialize() {
+    override suspend fun initialize() {
         val title = resLocator.getString(R.string.tech_debt_is_paid)
         view?.showTitle(title)
 
@@ -48,7 +48,7 @@ class SomeDetailPresenter(val resLocator: ResLocator, val userRepository: UserRe
         view?.showSomeResult()
     }
 
-    fun onAddButtonClicked() {
+    suspend fun onAddButtonClicked() {
         userRepository.insertUser(User(
                 "John Doe",
                 "Elm St. 178",
@@ -56,6 +56,10 @@ class SomeDetailPresenter(val resLocator: ResLocator, val userRepository: UserRe
                 "randomuser@android.com",
                 "http://bit.ly/lM5f24g"
         ))
+
+        coroutine {
+            Thread.sleep(5000)
+        }.await()
 
         requestUsers()
     }

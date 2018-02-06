@@ -16,7 +16,7 @@
 package es.voghdev.hellokotlin.global
 
 abstract class Presenter<T1, T2>() {
-    open fun initialize() { /* Empty */
+    open suspend fun initialize() { /* Empty */
     }
 
     open fun resume() { /* Empty */

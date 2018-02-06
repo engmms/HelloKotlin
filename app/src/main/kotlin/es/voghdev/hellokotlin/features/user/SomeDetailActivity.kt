@@ -23,6 +23,7 @@ import es.voghdev.hellokotlin.features.user.datasource.GetUsersDBDataSource
 import es.voghdev.hellokotlin.features.user.datasource.InsertUserDBDataSource
 import es.voghdev.hellokotlin.global.BaseActivity
 import kotlinx.android.synthetic.main.activity_some_detail.*
+import kotlinx.coroutines.experimental.runBlocking
 
 class SomeDetailActivity : BaseActivity(),
         SomeDetailPresenter.MVPView, SomeDetailPresenter.Navigator {
@@ -39,13 +40,19 @@ class SomeDetailActivity : BaseActivity(),
 
         presenter = SomeDetailPresenter(AndroidResLocator(this), userRepository)
 
-        presenter?.initialize()
+        runBlocking {
+            presenter?.initialize()
+        }
         presenter?.view = this
         presenter?.navigator = this
 
         btn_add.setOnClickListener {
-            presenter?.onAddButtonClicked()
+            runBlocking {
+                presenter?.onAddButtonClicked()
+            }
         }
+
+        tvTitle.text = "Waiting 5..."
     }
 
     override fun getLayoutId(): Int {

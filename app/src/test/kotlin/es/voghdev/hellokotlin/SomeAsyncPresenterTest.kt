@@ -27,6 +27,7 @@ import es.voghdev.hellokotlin.features.async.SomeAsyncPresenter
 import es.voghdev.hellokotlin.global.await
 import es.voghdev.hellokotlin.global.given
 import es.voghdev.hellokotlin.global.hasString
+import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
@@ -67,7 +68,7 @@ class SomeAsyncPresenterTest {
 
     @Test
     fun `should show loading on start`() {
-        presenter.initialize()
+        runBlocking { presenter.initialize() }
 
         verify(mockView).showLoading()
     }
@@ -76,7 +77,7 @@ class SomeAsyncPresenterTest {
     fun `should show success on start if Repository returns success`() {
         givenADataSourceReturningSuccess(mockListener)
 
-        presenter.initialize().await()
+        runBlocking { presenter.initialize().await() }
 
         verify(mockView).showSuccess(anyString())
     }
@@ -85,7 +86,7 @@ class SomeAsyncPresenterTest {
     fun `should show error on start if Repository returns error`() {
         givenADataSourceReturningFailure(mockListener)
 
-        presenter.initialize().await()
+        runBlocking { presenter.initialize().await() }
 
         verify(mockView).showError(anyString())
     }

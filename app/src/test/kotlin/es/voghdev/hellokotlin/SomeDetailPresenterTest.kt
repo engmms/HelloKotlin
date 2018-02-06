@@ -1,4 +1,3 @@
-
 package es.voghdev.hellokotlin
 
 import com.nhaarman.mockito_kotlin.argumentCaptor
@@ -57,7 +56,7 @@ class SomeDetailPresenterTest {
 
         assertNotNull(presenter)
 
-        presenter.initialize().await()
+        runBlocking { presenter.initialize().await() }
 
         verify(mockUserRepository, times(1))?.getUsers()
     }
@@ -70,7 +69,7 @@ class SomeDetailPresenterTest {
 
         assertNotNull(presenter)
 
-        presenter.initialize().await()
+        runBlocking { presenter.initialize().await() }
 
         verify(mockView, times(1))?.showUsers(anyList())
     }
@@ -81,7 +80,7 @@ class SomeDetailPresenterTest {
 
         assertNotNull(presenter)
 
-        presenter.initialize().await()
+        runBlocking { presenter.initialize().await() }
 
         verify(mockView, times(1))?.showEmptyCase()
     }
