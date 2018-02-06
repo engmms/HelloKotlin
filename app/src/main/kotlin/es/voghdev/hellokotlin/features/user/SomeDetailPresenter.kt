@@ -20,6 +20,8 @@ import es.voghdev.hellokotlin.domain.ResLocator
 import es.voghdev.hellokotlin.features.invoice.Invoice
 import es.voghdev.hellokotlin.global.Presenter
 import es.voghdev.hellokotlin.global.coroutine
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.doAsync
 
 class SomeDetailPresenter(val resLocator: ResLocator, val userRepository: UserRepository) :
@@ -49,19 +51,13 @@ class SomeDetailPresenter(val resLocator: ResLocator, val userRepository: UserRe
     }
 
     suspend fun onAddButtonClicked() {
-        userRepository.insertUser(User(
-                "John Doe",
-                "Elm St. 178",
-                "random",
-                "randomuser@android.com",
-                "http://bit.ly/lM5f24g"
-        ))
-
         coroutine {
-            Thread.sleep(5000)
-        }.await()
+            launch(CommonPool) {
+                Thread.sleep(5000)
 
-        requestUsers()
+                view?.showTitle("Result is here")
+            }
+        }.await()
     }
 
     suspend fun onSomeOtherEventHappened() {
