@@ -38,9 +38,10 @@ class MainActivity : AppCompatActivity() {
                 async(CommonPool) {
                     Thread.sleep(5000L)
 
-                    runOnUiThread { textView1.text = "Finally! I've been blocked for 5s :-(" }
                 }.await()
             }
+
+            textView1.text = "Finally! I've been blocked for 5s :-("
         }
 
         button2.setOnClickListener {
