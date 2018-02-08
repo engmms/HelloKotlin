@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Olmo Gallegos Hernández.
+ * Copyright (C) 2018 Olmo Gallegos Hernández.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,17 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
 
+/**
+ * Sample code for this SO question: https://stackoverflow.com/questions/48663423/why-does-this-coroutine-block-ui-thread
+ */
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         button1.setOnClickListener {
@@ -34,6 +39,18 @@ class MainActivity : AppCompatActivity() {
                     Thread.sleep(5000L)
 
                     runOnUiThread { textView1.text = "Finally! I've been blocked for 5s :-(" }
+                }.await()
+            }
+        }
+
+        button2.setOnClickListener {
+            runBlocking {
+                async(CommonPool) {
+                    launch(CommonPool) {
+                        Thread.sleep(5000L)
+
+                        runOnUiThread { textView1.text = "Done! UI was not blocked :-)" }
+                    }
                 }.await()
             }
         }
