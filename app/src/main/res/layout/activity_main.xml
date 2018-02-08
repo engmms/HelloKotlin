@@ -37,6 +37,17 @@
         android:text="Non-Blocking UI Update"
         android:textColor="@android:color/white" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="8dp"
+        android:text="StackOverflow answer"
+        android:textColor="@android:color/white" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

@@ -32,13 +32,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         button1.setOnClickListener {
-            launch(UI) {
-                withContext(CommonPool) {
+            runBlocking {
+                async(CommonPool) {
                     Thread.sleep(5000L)
-                }
 
-                textView1.text = "This is the proposed solution in StackOverflow"
+                }.await()
             }
+
+            runOnUiThread { textView1.text = "Finally! I've been blocked for 5s :-(" }
         }
 
         button2.setOnClickListener {
@@ -50,6 +51,16 @@ class MainActivity : AppCompatActivity() {
                         runOnUiThread { textView1.text = "Done! UI was not blocked :-)" }
                     }
                 }.await()
+            }
+        }
+
+        button3.setOnClickListener {
+            launch(UI) {
+                withContext(CommonPool) {
+                    Thread.sleep(5000L)
+                }
+
+                textView1.text = "This is the proposed solution in StackOverflow"
             }
         }
     }
