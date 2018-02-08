@@ -18,10 +18,8 @@ package es.voghdev.hellokotlin
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.android.UI
 
 /**
  * Sample code for this SO question: https://stackoverflow.com/questions/48663423/why-does-this-coroutine-block-ui-thread
@@ -34,14 +32,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         button1.setOnClickListener {
-            runBlocking {
-                async(CommonPool) {
+            launch(UI) {
+                withContext(CommonPool) {
                     Thread.sleep(5000L)
+                }
 
-                }.await()
+                textView1.text = "This is the proposed solution in StackOverflow"
             }
-
-            textView1.text = "Finally! I've been blocked for 5s :-("
         }
 
         button2.setOnClickListener {
