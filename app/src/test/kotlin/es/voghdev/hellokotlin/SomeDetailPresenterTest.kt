@@ -1,4 +1,3 @@
-
 package es.voghdev.hellokotlin
 
 import com.nhaarman.mockito_kotlin.argumentCaptor
@@ -11,6 +10,9 @@ import es.voghdev.hellokotlin.features.user.UserRepository
 import es.voghdev.hellokotlin.features.user.usecase.GetUsers
 import es.voghdev.hellokotlin.features.user.usecase.InsertUser
 import es.voghdev.hellokotlin.global.await
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.slot
 import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Assert.assertEquals
@@ -43,6 +45,8 @@ class SomeDetailPresenterTest {
 
     lateinit var presenter: SomeDetailPresenter
 
+    val someUsers = listOf(User(name = "John"))
+
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
@@ -66,13 +70,39 @@ class SomeDetailPresenterTest {
     fun `should show user list if request has results`() {
         givenAllStringsAreMocked()
 
-        whenever(mockUserRepository.getUsers()).thenReturn(listOf(User(name = "John")))
+        whenever(mockUserRepository.getUsers()).thenReturn(someUsers)
 
         assertNotNull(presenter)
 
         presenter.initialize().await()
 
         verify(mockView, times(1))?.showUsers(anyList())
+    }
+
+    @Test
+    fun `should do previous test using mockK`() {
+        val repo = mockk<UserRepository>()
+        val res = mockk<ResLocator>()
+        val view = mockk<SomeDetailPresenter.MVPView>()
+        val navigator = mockk<SomeDetailPresenter.Navigator>()
+
+        every { res.getString(any()) } returns "Relax man, I pay my tech debt!"
+
+        every { repo.getUsers() } returns someUsers
+
+        every { view.showTitle(any()) } returns Unit
+
+        every { view.showUsers(any()) } returns Unit
+
+        presenter = SomeDetailPresenter(res, repo)
+        presenter.view = view
+        presenter.navigator = navigator
+
+        presenter.initialize()
+
+        val slot = slot<List<User>>()
+
+        verify { view.showUsers(slot.captured) }
     }
 
     @Test

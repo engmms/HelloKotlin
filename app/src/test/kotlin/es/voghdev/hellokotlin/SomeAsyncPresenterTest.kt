@@ -27,6 +27,7 @@ import es.voghdev.hellokotlin.features.async.SomeAsyncPresenter
 import es.voghdev.hellokotlin.global.await
 import es.voghdev.hellokotlin.global.given
 import es.voghdev.hellokotlin.global.hasString
+import io.mockk.mockk
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
