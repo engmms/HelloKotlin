@@ -17,7 +17,6 @@ package es.voghdev.hellokotlin.features.user
 
 import es.voghdev.hellokotlin.domain.TimedCachePolicy
 import es.voghdev.hellokotlin.features.invoice.Invoice
-import es.voghdev.hellokotlin.features.user.datasource.InsertUsersDBDataSource
 import es.voghdev.hellokotlin.features.user.usecase.GetUsers
 import es.voghdev.hellokotlin.features.user.usecase.InsertUser
 import es.voghdev.hellokotlin.features.user.usecase.InsertUsers
