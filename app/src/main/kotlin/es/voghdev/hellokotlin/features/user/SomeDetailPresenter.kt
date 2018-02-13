@@ -60,6 +60,19 @@ class SomeDetailPresenter(val resLocator: ResLocator, val userRepository: UserRe
         requestUsers()
     }
 
+    fun onAddButtonLongClicked() {
+        userRepository.insertUsers((1..10).map {
+            User("John #$it",
+                    "Elm St. ${180 + it}",
+                    "random$it",
+                    "randomuser$it@android.com",
+                    "http://bit.ly/lM5f24g"
+            )
+        })
+
+        requestUsers()
+    }
+
     suspend fun onSomeOtherEventHappened() {
         coroutine {
             userRepository.performSomeBlockingOperationWithResult()

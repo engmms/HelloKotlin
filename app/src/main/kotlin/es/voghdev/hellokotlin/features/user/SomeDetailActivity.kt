@@ -21,6 +21,7 @@ import es.voghdev.hellokotlin.domain.AndroidResLocator
 import es.voghdev.hellokotlin.features.user.datasource.GetUsersApiDataSource
 import es.voghdev.hellokotlin.features.user.datasource.GetUsersDBDataSource
 import es.voghdev.hellokotlin.features.user.datasource.InsertUserDBDataSource
+import es.voghdev.hellokotlin.features.user.datasource.InsertUsersDBDataSource
 import es.voghdev.hellokotlin.global.BaseActivity
 import kotlinx.android.synthetic.main.activity_some_detail.*
 
@@ -35,7 +36,8 @@ class SomeDetailActivity : BaseActivity(),
         userRepository = UserRepository(
                 getUsersApiDataSource = GetUsersApiDataSource(),
                 getUsersDBDataSource = GetUsersDBDataSource(),
-                insertUserDBDataSource = InsertUserDBDataSource())
+                insertUserDBDataSource = InsertUserDBDataSource(),
+                insertUsersDBDataSource = InsertUsersDBDataSource())
 
         presenter = SomeDetailPresenter(AndroidResLocator(this), userRepository)
 
@@ -45,6 +47,12 @@ class SomeDetailActivity : BaseActivity(),
 
         btn_add.setOnClickListener {
             presenter?.onAddButtonClicked()
+        }
+
+        btn_add.setOnLongClickListener {
+            presenter?.onAddButtonLongClicked()
+
+            false
         }
     }
 
