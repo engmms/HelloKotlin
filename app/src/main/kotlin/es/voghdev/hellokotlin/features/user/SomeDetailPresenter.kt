@@ -60,6 +60,12 @@ class SomeDetailPresenter(val resLocator: ResLocator, val userRepository: UserRe
         requestUsers()
     }
 
+    fun onDeleteButtonClicked() {
+        userRepository.deleteUser("randomuser@android.com")
+
+        requestUsers()
+    }
+
     fun onAddButtonLongClicked() {
         userRepository.insertUsers((1..10).map {
             User("John #$it",

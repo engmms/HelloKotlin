@@ -20,8 +20,9 @@ import es.voghdev.hellokotlin.R
 import es.voghdev.hellokotlin.domain.AndroidResLocator
 import es.voghdev.hellokotlin.features.user.datasource.GetUsersApiDataSource
 import es.voghdev.hellokotlin.features.user.datasource.GetUsersDBDataSource
-import es.voghdev.hellokotlin.features.user.datasource.InsertUserDBDataSource
 import es.voghdev.hellokotlin.features.user.datasource.InsertUsersDBDataSource
+import es.voghdev.hellokotlin.features.user.datasource.InsertUserDBDataSource
+import es.voghdev.hellokotlin.features.user.datasource.DeleteUserDBDataSource
 import es.voghdev.hellokotlin.global.BaseActivity
 import kotlinx.android.synthetic.main.activity_some_detail.*
 
@@ -34,10 +35,11 @@ class SomeDetailActivity : BaseActivity(),
         super.onCreate(savedInstanceState)
 
         userRepository = UserRepository(
-                getUsersApiDataSource = GetUsersApiDataSource(),
-                getUsersDBDataSource = GetUsersDBDataSource(),
-                insertUserDBDataSource = InsertUserDBDataSource(),
-                insertUsersDBDataSource = InsertUsersDBDataSource())
+                GetUsersApiDataSource(),
+                GetUsersDBDataSource(),
+                InsertUserDBDataSource(),
+                InsertUsersDBDataSource(),
+                DeleteUserDBDataSource())
 
         presenter = SomeDetailPresenter(AndroidResLocator(this), userRepository)
 
@@ -47,6 +49,10 @@ class SomeDetailActivity : BaseActivity(),
 
         btn_add.setOnClickListener {
             presenter?.onAddButtonClicked()
+        }
+
+        btn_delete.setOnClickListener {
+            presenter?.onDeleteButtonClicked()
         }
 
         btn_add.setOnLongClickListener {

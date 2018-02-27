@@ -1,4 +1,3 @@
-
 package es.voghdev.hellokotlin
 
 import com.nhaarman.mockito_kotlin.argumentCaptor
@@ -8,8 +7,10 @@ import es.voghdev.hellokotlin.features.invoice.Invoice
 import es.voghdev.hellokotlin.features.user.SomeDetailPresenter
 import es.voghdev.hellokotlin.features.user.User
 import es.voghdev.hellokotlin.features.user.UserRepository
+import es.voghdev.hellokotlin.features.user.usecase.DeleteUser
 import es.voghdev.hellokotlin.features.user.usecase.GetUsers
 import es.voghdev.hellokotlin.features.user.usecase.InsertUser
+import es.voghdev.hellokotlin.features.user.usecase.InsertUsers
 import es.voghdev.hellokotlin.global.await
 import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.experimental.runBlocking
@@ -40,6 +41,12 @@ class SomeDetailPresenterTest {
 
     @Mock
     lateinit var mockInsertUser: InsertUser
+
+    @Mock
+    lateinit var mockInsertUsers: InsertUsers
+
+    @Mock
+    lateinit var mockDeleteUser: DeleteUser
 
     lateinit var presenter: SomeDetailPresenter
 
@@ -135,7 +142,12 @@ class SomeDetailPresenterTest {
 
     @Test
     fun `should call a method that contains a coroutine using a non-mocked repository with mock DataSources`() {
-        val nonMockedRepository = UserRepository(mockGetUsersApi, mockGetUsersDb, mockInsertUser)
+        val nonMockedRepository = UserRepository(
+                mockGetUsersApi,
+                mockGetUsersDb,
+                mockInsertUser,
+                mockInsertUsers,
+                mockDeleteUser)
 
         val presenter = SomeDetailPresenter(mockResLocator, nonMockedRepository)
         presenter.view = mockView

@@ -17,6 +17,7 @@ package es.voghdev.hellokotlin.features.user
 
 import es.voghdev.hellokotlin.domain.TimedCachePolicy
 import es.voghdev.hellokotlin.features.invoice.Invoice
+import es.voghdev.hellokotlin.features.user.usecase.DeleteUser
 import es.voghdev.hellokotlin.features.user.usecase.GetUsers
 import es.voghdev.hellokotlin.features.user.usecase.InsertUser
 import es.voghdev.hellokotlin.features.user.usecase.InsertUsers
@@ -25,8 +26,12 @@ import es.voghdev.hellokotlin.global.CachePolicy
 class UserRepository(val getUsersApiDataSource: GetUsers,
                      val getUsersDBDataSource: GetUsers,
                      val insertUserDBDataSource: InsertUser,
-                     val insertUsersDBDataSource: InsertUsers)
-    : GetUsers, InsertUser by insertUserDBDataSource, InsertUsers by insertUsersDBDataSource {
+                     val insertUsersDBDataSource: InsertUsers,
+                     val deleteUserDataSource: DeleteUser)
+    : GetUsers,
+        InsertUser by insertUserDBDataSource,
+        InsertUsers by insertUsersDBDataSource,
+        DeleteUser by deleteUserDataSource {
     var cachePolicy: CachePolicy? = null
     var cache: MutableList<User> = ArrayList()
 

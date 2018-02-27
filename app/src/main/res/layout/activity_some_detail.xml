@@ -27,4 +27,16 @@
         android:background="@drawable/green_circle"
         />
 
+    <ImageButton
+        android:id="@+id/btn_delete"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_above="@+id/btn_add"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
+        android:src="@android:drawable/ic_delete"
+        android:tint="@android:color/white"
+        android:background="@drawable/green_circle"
+        />
+
 </RelativeLayout>
